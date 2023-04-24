@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class NiveauWater : MonoBehaviour
 {
@@ -36,7 +38,11 @@ public class NiveauWater : MonoBehaviour
         //VolumeEau = SurfaceEau * ht;
         VolumeEau -= Debit * deltatime;
         ht = VolumeEau / SurfaceEau;
-        gameObject.transform.lossyScale.Set(transform.localScale.x, ht, transform.localScale.z);
+
+        RectTransform rectTrans = GetComponent<RectTransform>();
+
+        rectTrans.sizeDelta=new Vector2(4.5f, ht);
+
         Debug.Log(ht);
     }
 }
