@@ -33,10 +33,8 @@ public class NiveauWater : MonoBehaviour
     {
         speedWater = Mathf.Sqrt(2*g*ht);
         Debit = diamtru * speedWater;
-        //VolumeEau = SurfaceEau * ht;
         VolumeEau -= Debit * deltatime;
         ht = VolumeEau / SurfaceEau;
-        gameObject.transform.lossyScale.Set(transform.localScale.x, ht, transform.localScale.z);
         Debug.Log(ht);
     }
 }
