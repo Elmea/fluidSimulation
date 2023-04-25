@@ -6,7 +6,13 @@ using UnityEngine.UI;
 
 public class NiveauWater : MonoBehaviour
 {
+    [SerializeField] Slider SliderH;
+    [SerializeField] Slider SliderHauteurReservoir;
+    [SerializeField] Slider SliderDiamtru;
+
+
     [SerializeField] GameObject flecheu;
+    [SerializeField] GameObject Ouverture;
     public float hauteurReservoir;
     public float H;
     public float diamtru;
@@ -28,6 +34,11 @@ public class NiveauWater : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        SliderH.value = H;
+        SliderHauteurReservoir.value = hauteurReservoir;
+        SliderDiamtru.value = diamtru;
+
         deltatime = 0.01f;
         SurfaceEau = 16;
         ht = H;
@@ -42,8 +53,12 @@ public class NiveauWater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(startSimulation)
+        Ouverture.transform.position = new Vector3(Ouverture.transform.position.x, baseRectanglePos.y + 2.6f + SliderDiamtru.value);
+        if (startSimulation)
         {
+            H = SliderH.value;
+            hauteurReservoir = SliderHauteurReservoir.value;
+            diamtru = SliderDiamtru.value;
             if (tailleFleche <= 0.05f)
             {
                 startSimulation = false;
