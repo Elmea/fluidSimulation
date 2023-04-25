@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,13 @@ using UnityEngine.UI;
 public class NiveauWater : MonoBehaviour
 {
     [SerializeField] GameObject flecheu;
+    [SerializeField] GameObject positionOrifice;
+
     public float hauteurReservoir;
     public float H;
     public float diamtru;
+    public float lineDeltaTime;
+    
     private float ht;
     private Vector2 baseRectanglePos;
     private Vector2 baseRectangleScale;
@@ -23,6 +28,10 @@ public class NiveauWater : MonoBehaviour
     private float deltatime;
     private float distanceConstant;
 
+    private List<Vector3> points;
+
+    private LineRenderer line;
+    
     public bool startSimulation = false;
 
     // Start is called before the first frame update
@@ -37,6 +46,8 @@ public class NiveauWater : MonoBehaviour
         BaseArrowPos = flecheu.transform.position;
         baseRectanglePos = transform.position;
         baseRectangleScale = transform.localScale;
+        line = GetComponent<LineRenderer>();
+        points = new List<Vector3>();
     }
 
     // Update is called once per frame
@@ -60,9 +71,31 @@ public class NiveauWater : MonoBehaviour
             tailleFleche = distanceConstant * speedWater;
             Debug.Log(tailleFleche);
             flecheu.transform.localScale = new Vector2(tailleFleche, 0.1f);
-            flecheu.transform.position = new Vector3(BaseArrowPos.x + 0.5f * flecheu.transform.localScale.x, BaseArrowPos.y);
-        }
-        
+            flecheu.transform.position = new Vector3(BaseArrowPos.x + 0.5f * flecheu.transform.localScale.x, BaseArrowPos.y, -0.5f);
 
+            points.Clear();
+            float yPos = 1;
+            float xPos;
+            float time = 0;
+            float limit = Mathf.Sqrt(2 * hauteurReservoir / g);
+            int pointAdded = 0;
+            while (time < limit)
+            {
+                yPos = hauteurReservoir - 0.5f * g * time * time;
+                xPos = positionOrifice.transform.position.x + time * speedWater;
+
+                points.Add(new Vector2(xPos, yPos));
+                time += lineDeltaTime;
+                pointAdded++;
+            }
+
+            line.positionCount = pointAdded;
+            line.SetPositions(points.ToArray());
+        }
+        else
+        {
+            line.positionCount = 0;
+
+        }
     }
 }
