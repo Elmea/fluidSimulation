@@ -23,6 +23,8 @@ public class NiveauWater : MonoBehaviour
     private float deltatime;
     private float distanceConstant;
 
+    public bool startSimulation = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,18 +42,27 @@ public class NiveauWater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        speedWater = Mathf.Sqrt(2*g*ht);
-        Debit = diamtru * speedWater;
-        VolumeEau -= Debit * deltatime;
-        ht = VolumeEau / SurfaceEau;
+        if(startSimulation)
+        {
+            if (tailleFleche <= 0.05f)
+            {
+                startSimulation = false;
+            }
 
-        transform.localScale = new Vector2(baseRectangleScale.x, ht);
-        transform.position = new Vector3(baseRectanglePos.x, baseRectanglePos.y + 0.5f * transform.localScale.y);
+            speedWater = Mathf.Sqrt(2 * g * ht);
+            Debit = diamtru * speedWater;
+            VolumeEau -= Debit * deltatime;
+            ht = VolumeEau / SurfaceEau;
 
-        tailleFleche = distanceConstant * speedWater;
-        Debug.Log(tailleFleche);
-        flecheu.transform.localScale = new Vector2(tailleFleche, 0.1f);
-        flecheu.transform.position = new Vector3(BaseArrowPos.x + 0.5f * flecheu.transform.localScale.x, BaseArrowPos.y);
+            transform.localScale = new Vector2(baseRectangleScale.x, ht);
+            transform.position = new Vector3(baseRectanglePos.x, baseRectanglePos.y + 0.5f * transform.localScale.y, 5);
+
+            tailleFleche = distanceConstant * speedWater;
+            Debug.Log(tailleFleche);
+            flecheu.transform.localScale = new Vector2(tailleFleche, 0.1f);
+            flecheu.transform.position = new Vector3(BaseArrowPos.x + 0.5f * flecheu.transform.localScale.x, BaseArrowPos.y);
+        }
+        
 
     }
 }
