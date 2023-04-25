@@ -7,18 +7,21 @@ using UnityEngine.UI;
 public class NiveauWater : MonoBehaviour
 {
     [SerializeField] GameObject flecheu;
-    [SerializeField] GameObject Reservoir;
     public float hauteurReservoir;
     public float H;
     public float diamtru;
     private float ht;
+    private Vector2 baseRectanglePos;
+    private Vector2 baseRectangleScale;
     private float tailleFleche;
+    private Vector2 BaseArrowPos;
     private float speedWater;
     private float g = 9.81f;
     private float SurfaceEau;
     private float VolumeEau;
     private float Debit;
     private float deltatime;
+    private float distanceConstant;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +31,10 @@ public class NiveauWater : MonoBehaviour
         ht = H;
         VolumeEau = SurfaceEau * ht;
         speedWater = Mathf.Sqrt(2*g*ht);
+        distanceConstant = Mathf.Sqrt(2 * hauteurReservoir / g);
+        BaseArrowPos = flecheu.transform.position;
+        baseRectanglePos = transform.position;
+        baseRectangleScale = transform.localScale;
     }
 
     // Update is called once per frame
@@ -38,10 +45,13 @@ public class NiveauWater : MonoBehaviour
         VolumeEau -= Debit * deltatime;
         ht = VolumeEau / SurfaceEau;
 
-        RectTransform rectTrans = GetComponent<RectTransform>();
+        transform.localScale = new Vector2(baseRectangleScale.x, ht);
+        transform.position = new Vector3(baseRectanglePos.x, baseRectanglePos.y + 0.5f * transform.localScale.y);
 
-        rectTrans.sizeDelta=new Vector2(4.5f, ht);
+        tailleFleche = distanceConstant * speedWater;
+        Debug.Log(tailleFleche);
+        flecheu.transform.localScale = new Vector2(tailleFleche, 0.1f);
+        flecheu.transform.position = new Vector3(BaseArrowPos.x + 0.5f * flecheu.transform.localScale.x, BaseArrowPos.y);
 
-        Debug.Log(ht);
     }
 }
