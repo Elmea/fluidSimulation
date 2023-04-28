@@ -18,6 +18,9 @@ public class NiveauWater : MonoBehaviour
 
     [SerializeField] GameObject flecheu;
     [SerializeField] GameObject Ouverture;
+    [SerializeField] GameObject paroiGauche;
+    [SerializeField] GameObject paroiBasse;
+
     [SerializeField] GameObject positionOrifice;
 
     public float hauteurReservoir;
@@ -74,11 +77,15 @@ public class NiveauWater : MonoBehaviour
         TextTailleCuve.text = "H: " + H;
         TextHauteurReservoir.text = "Hauteur Reservoir: " + hauteurReservoir;
         TextDiamtru.text = "Diametre trou: " + diamtru;
-        Ouverture.transform.position = new Vector3(Ouverture.transform.position.x, baseRectanglePos.y + 2.35f + SliderDiamtru.value);
+        Ouverture.transform.position = new Vector3(Ouverture.transform.position.x, baseRectanglePos.y + 2.35f + SliderDiamtru.value + hauteurReservoir);
+        paroiBasse.transform.position = new Vector3(paroiBasse.transform.position.x, baseRectanglePos.y + hauteurReservoir);
+        paroiGauche.transform.position = new Vector3(paroiGauche.transform.position.x, baseRectanglePos.y + 2.35f + hauteurReservoir);
+
+
         if (startSimulation)
         {
-           
-            
+
+
             if (tailleFleche <= 0.05f)
             {
                 startSimulation = false;
@@ -121,5 +128,8 @@ public class NiveauWater : MonoBehaviour
             line.positionCount = 0;
 
         }
+
+        transform.position = new Vector3(transform.position.x, baseRectanglePos.y + 2.35f + hauteurReservoir);
+
     }
 }
