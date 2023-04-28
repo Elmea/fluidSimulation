@@ -9,6 +9,9 @@ public class NiveauWater : MonoBehaviour
     [SerializeField] Slider SliderH;
     [SerializeField] Slider SliderHauteurReservoir;
     [SerializeField] Slider SliderDiamtru;
+    [SerializeField] Text TextH;
+    [SerializeField] Text TextHauteurReservoir;
+    [SerializeField] Text TextDiamtru;
 
 
     [SerializeField] GameObject flecheu;
@@ -59,6 +62,9 @@ public class NiveauWater : MonoBehaviour
             H = SliderH.value;
             hauteurReservoir = SliderHauteurReservoir.value;
             diamtru = SliderDiamtru.value;
+            TextH.text = "H: " + H;
+            TextHauteurReservoir.text = "Hauteur Reservoir: " + hauteurReservoir;
+            TextDiamtru.text = "Diametre trou: " + diamtru; 
             if (tailleFleche <= 0.05f)
             {
                 startSimulation = false;
