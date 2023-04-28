@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class NiveauWater : MonoBehaviour
 {
-    [SerializeField] Slider SliderH;
+    [SerializeField] Slider SliderTailleCuve;
     [SerializeField] Slider SliderHauteurReservoir;
     [SerializeField] Slider SliderDiamtru;
-    [SerializeField] Text TextH;
-    [SerializeField] Text TextHauteurReservoir;
-    [SerializeField] Text TextDiamtru;
+    [SerializeField] TextMeshProUGUI TextTailleCuve;
+    [SerializeField] TextMeshProUGUI TextHauteurReservoir;
+    [SerializeField] TextMeshProUGUI TextDiamtru;
 
 
     [SerializeField] GameObject flecheu;
@@ -47,7 +48,7 @@ public class NiveauWater : MonoBehaviour
     void Start()
     {
 
-        SliderH.value = H;
+        SliderTailleCuve.value = H;
         SliderHauteurReservoir.value = hauteurReservoir;
         SliderDiamtru.value = diamtru;
 
@@ -67,15 +68,17 @@ public class NiveauWater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ouverture.transform.position = new Vector3(Ouverture.transform.position.x, baseRectanglePos.y + 2.6f + SliderDiamtru.value);
+        H = SliderTailleCuve.value;
+        hauteurReservoir = SliderHauteurReservoir.value;
+        diamtru = SliderDiamtru.value;
+        TextTailleCuve.text = "H: " + H;
+        TextHauteurReservoir.text = "Hauteur Reservoir: " + hauteurReservoir;
+        TextDiamtru.text = "Diametre trou: " + diamtru;
+        Ouverture.transform.position = new Vector3(Ouverture.transform.position.x, baseRectanglePos.y + 2.35f + SliderDiamtru.value);
         if (startSimulation)
         {
-            H = SliderH.value;
-            hauteurReservoir = SliderHauteurReservoir.value;
-            diamtru = SliderDiamtru.value;
-            TextH.text = "H: " + H;
-            TextHauteurReservoir.text = "Hauteur Reservoir: " + hauteurReservoir;
-            TextDiamtru.text = "Diametre trou: " + diamtru; 
+           
+            
             if (tailleFleche <= 0.05f)
             {
                 startSimulation = false;
