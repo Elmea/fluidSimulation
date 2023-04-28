@@ -47,6 +47,16 @@ public class NiveauWater : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        line = GetComponent<LineRenderer>();
+        baseRectanglePos = transform.position;
+        baseRectangleScale = transform.localScale;
+        BaseArrowPos = flecheu.transform.position;
+        Reset();
+    }
+
+    public void Reset()
+    {
+        line.positionCount = 0;
 
         SliderTailleCuve.value = H;
         SliderHauteurReservoir.value = hauteurReservoir;
@@ -56,13 +66,14 @@ public class NiveauWater : MonoBehaviour
         SurfaceEau = 16;
         ht = H;
         VolumeEau = SurfaceEau * ht;
-        speedWater = Mathf.Sqrt(2*g*ht);
+        speedWater = Mathf.Sqrt(2 * g * ht);
         distanceConstant = Mathf.Sqrt(2 * hauteurReservoir / g);
-        BaseArrowPos = flecheu.transform.position;
-        baseRectanglePos = transform.position;
-        baseRectangleScale = transform.localScale;
-        line = GetComponent<LineRenderer>();
+
         points = new List<Vector3>();
+        transform.position = new Vector3(baseRectanglePos.x, baseRectanglePos.y, 5);
+        flecheu.transform.position = new Vector3(BaseArrowPos.x, BaseArrowPos.y, -0.5f);
+        transform.localScale = new Vector2(baseRectangleScale.x, 0.07f);
+        flecheu.transform.localScale = new Vector2(0.5f, 0.07f);
     }
 
     // Update is called once per frame
@@ -93,7 +104,6 @@ public class NiveauWater : MonoBehaviour
             transform.position = new Vector3(baseRectanglePos.x, baseRectanglePos.y + 0.5f * transform.localScale.y, 5);
 
             tailleFleche = distanceConstant * speedWater;
-            Debug.Log(tailleFleche);
             flecheu.transform.localScale = new Vector2(tailleFleche, 0.1f);
             flecheu.transform.position = new Vector3(BaseArrowPos.x + 0.5f * flecheu.transform.localScale.x, BaseArrowPos.y, -0.5f);
 
