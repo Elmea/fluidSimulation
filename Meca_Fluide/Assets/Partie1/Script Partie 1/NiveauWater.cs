@@ -20,7 +20,7 @@ public class NiveauWater : MonoBehaviour
     [SerializeField] GameObject Ouverture;
     [SerializeField] GameObject paroiGauche;
     [SerializeField] GameObject paroiBasse;
-
+  
     [SerializeField] GameObject positionOrifice;
 
     public float hauteurReservoir;
@@ -77,9 +77,9 @@ public class NiveauWater : MonoBehaviour
         TextTailleCuve.text = "H: " + H;
         TextHauteurReservoir.text = "Hauteur Reservoir: " + hauteurReservoir;
         TextDiamtru.text = "Diametre trou: " + diamtru;
-        Ouverture.transform.position = new Vector3(Ouverture.transform.position.x, baseRectanglePos.y + 2.35f + SliderDiamtru.value + hauteurReservoir);
-        paroiBasse.transform.position = new Vector3(paroiBasse.transform.position.x, baseRectanglePos.y + hauteurReservoir);
-        paroiGauche.transform.position = new Vector3(paroiGauche.transform.position.x, baseRectanglePos.y + 2.35f + hauteurReservoir);
+        Ouverture.transform.position = new Vector3(Ouverture.transform.position.x, baseRectanglePos.y + 2.35f + SliderDiamtru.value + hauteurReservoir - 4.2f);
+        paroiBasse.transform.position = new Vector3(paroiBasse.transform.position.x, baseRectanglePos.y + hauteurReservoir - 4.39f);
+        paroiGauche.transform.position = new Vector3(paroiGauche.transform.position.x, baseRectanglePos.y + 2.35f + hauteurReservoir - 4.2f);
 
 
         if (startSimulation)
@@ -97,12 +97,12 @@ public class NiveauWater : MonoBehaviour
             ht = VolumeEau / SurfaceEau;
 
             transform.localScale = new Vector2(baseRectangleScale.x, ht);
-            transform.position = new Vector3(baseRectanglePos.x, baseRectanglePos.y + 0.5f * transform.localScale.y, 5);
-
+            //transform.position = new Vector3(baseRectanglePos.x, baseRectanglePos.y + 0.5f * transform.localScale.y);
+            
             tailleFleche = distanceConstant * speedWater;
             Debug.Log(tailleFleche);
             flecheu.transform.localScale = new Vector2(tailleFleche, 0.1f);
-            flecheu.transform.position = new Vector3(BaseArrowPos.x + 0.5f * flecheu.transform.localScale.x, BaseArrowPos.y, -0.5f);
+            flecheu.transform.position = new Vector3(BaseArrowPos.x + 0.5f * flecheu.transform.localScale.x+4, BaseArrowPos.y, -0.5f);
 
             points.Clear();
             float yPos = 1;
@@ -129,7 +129,7 @@ public class NiveauWater : MonoBehaviour
 
         }
 
-        transform.position = new Vector3(transform.position.x, baseRectanglePos.y + 2.35f + hauteurReservoir);
+        transform.position = new Vector3(transform.position.x, baseRectanglePos.y + 2.35f + hauteurReservoir - 4.6f);
 
     }
 }
