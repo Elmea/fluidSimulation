@@ -50,6 +50,16 @@ public class NiveauWater : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        line = GetComponent<LineRenderer>();
+        baseRectanglePos = transform.position;
+        baseRectangleScale = transform.localScale;
+        BaseArrowPos = flecheu.transform.position;
+        Reset();
+    }
+
+    public void Reset()
+    {
+        line.positionCount = 0;
 
         SliderTailleCuve.value = H;
         SliderHauteurReservoir.value = hauteurReservoir;
@@ -59,13 +69,14 @@ public class NiveauWater : MonoBehaviour
         SurfaceEau = 16;
         ht = H;
         VolumeEau = SurfaceEau * ht;
-        speedWater = Mathf.Sqrt(2*g*ht);
+        speedWater = Mathf.Sqrt(2 * g * ht);
         distanceConstant = Mathf.Sqrt(2 * hauteurReservoir / g);
-        BaseArrowPos = flecheu.transform.position;
-        baseRectanglePos = transform.position;
-        baseRectangleScale = transform.localScale;
-        line = GetComponent<LineRenderer>();
+
         points = new List<Vector3>();
+        transform.position = new Vector3(baseRectanglePos.x, baseRectanglePos.y, 5);
+        flecheu.transform.position = new Vector3(BaseArrowPos.x, BaseArrowPos.y, -0.5f);
+        transform.localScale = new Vector2(baseRectangleScale.x, 0.07f);
+        flecheu.transform.localScale = new Vector2(0.5f, 0.07f);
     }
 
     // Update is called once per frame
@@ -77,9 +88,9 @@ public class NiveauWater : MonoBehaviour
         TextTailleCuve.text = "H: " + H;
         TextHauteurReservoir.text = "Hauteur Reservoir: " + hauteurReservoir;
         TextDiamtru.text = "Diametre trou: " + diamtru;
-        Ouverture.transform.position = new Vector3(Ouverture.transform.position.x, baseRectanglePos.y + 2.35f + SliderDiamtru.value + hauteurReservoir - 4.2f);
-        paroiBasse.transform.position = new Vector3(paroiBasse.transform.position.x, baseRectanglePos.y + hauteurReservoir - 4.39f);
-        paroiGauche.transform.position = new Vector3(paroiGauche.transform.position.x, baseRectanglePos.y + 2.35f + hauteurReservoir - 4.2f);
+        Ouverture.transform.position = new Vector3(Ouverture.transform.position.x, baseRectanglePos.y + 2.35f + SliderDiamtru.value + hauteurReservoir - 4f);
+        paroiBasse.transform.position = new Vector3(paroiBasse.transform.position.x, baseRectanglePos.y + hauteurReservoir - 4.19f);
+        paroiGauche.transform.position = new Vector3(paroiGauche.transform.position.x, baseRectanglePos.y + 2.35f + hauteurReservoir - 4f);
 
 
         if (startSimulation)
@@ -100,7 +111,6 @@ public class NiveauWater : MonoBehaviour
             //transform.position = new Vector3(baseRectanglePos.x, baseRectanglePos.y + 0.5f * transform.localScale.y);
             
             tailleFleche = distanceConstant * speedWater;
-            Debug.Log(tailleFleche);
             flecheu.transform.localScale = new Vector2(tailleFleche, 0.1f);
             flecheu.transform.position = new Vector3(BaseArrowPos.x + 0.5f * flecheu.transform.localScale.x+4, BaseArrowPos.y, -0.5f);
 
@@ -120,6 +130,10 @@ public class NiveauWater : MonoBehaviour
                 pointAdded++;
             }
 
+            
+            line.startWidth = diamtru;
+            line.endWidth = diamtru;
+
             line.positionCount = pointAdded;
             line.SetPositions(points.ToArray());
         }
@@ -129,7 +143,7 @@ public class NiveauWater : MonoBehaviour
 
         }
 
-        transform.position = new Vector3(transform.position.x, baseRectanglePos.y + 2.35f + hauteurReservoir - 4.6f);
+        transform.position = new Vector3(transform.position.x, baseRectanglePos.y + 2.35f + hauteurReservoir - 4.4f);
 
     }
 }
