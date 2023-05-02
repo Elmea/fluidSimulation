@@ -77,8 +77,6 @@ public class NiveauWater : MonoBehaviour
         Ouverture.transform.position = new Vector3(Ouverture.transform.position.x, baseRectanglePos.y + 2.35f + SliderDiamtru.value);
         if (startSimulation)
         {
-           
-            
             if (tailleFleche <= 0.05f)
             {
                 startSimulation = false;
@@ -112,6 +110,10 @@ public class NiveauWater : MonoBehaviour
                 time += lineDeltaTime;
                 pointAdded++;
             }
+
+            
+            line.startWidth = diamtru;
+            line.endWidth = diamtru;
 
             line.positionCount = pointAdded;
             line.SetPositions(points.ToArray());
