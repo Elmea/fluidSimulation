@@ -3766,9 +3766,9 @@ MonoBehaviour:
   SliderDiamtru: {fileID: 1070272729}
   TextTailleCuve: {fileID: 335620984}
   TextHauteurReservoir: {fileID: 70213643}
-  TextDiamtru: {fileID: 883934561}
-  water: {fileID: 1907123698}
-  flecheu: {fileID: 1350989423}
+  TextDiamOrifice: {fileID: 883934561}
+  Water: {fileID: 1907123698}
+  fleche: {fileID: 1350989423}
   Ouverture: {fileID: 743032119}
   positionOrifice: {fileID: 1170350974}
   hauteurReservoir: 5
