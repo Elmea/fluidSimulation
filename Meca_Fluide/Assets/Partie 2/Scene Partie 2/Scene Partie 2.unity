@@ -2961,9 +2961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d26b107413f72b14297ffb030a34b363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particles:
-  - {fileID: 0}
-  - {fileID: 0}
+  particles: []
   stiffness: 3
   referenceDensity: 1000
 --- !u!4 &1275682841
