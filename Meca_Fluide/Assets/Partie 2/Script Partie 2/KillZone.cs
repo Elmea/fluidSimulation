@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class KillZone : MonoBehaviour
 {
+    [SerializeField] private ParticleManager particleManager;
+
     // Start is called before the first frame update
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "ParticuleEau")
+        if (collision.gameObject.CompareTag("ParticuleEau"))
         {
+            particleManager.particles.Remove(collision.gameObject.GetComponent<Particle>());
             Destroy(collision.gameObject);
         }
     }
