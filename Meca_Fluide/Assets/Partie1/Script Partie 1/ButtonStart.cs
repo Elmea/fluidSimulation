@@ -14,6 +14,5 @@ public class ButtonStart : MonoBehaviour
     {
         water.startSimulation = false;
         water.Reset();
-        Debug.Log("prout");
     }
 }
