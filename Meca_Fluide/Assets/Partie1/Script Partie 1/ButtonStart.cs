@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ButtonStart : MonoBehaviour
 {
-    [SerializeField] NiveauWater water;
+    [SerializeField] NiveauEau water;
     public void OnClickStartSim()
     {
         water.startSimulation = true;

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 
 
-public class NiveauWater : MonoBehaviour
+public class NiveauEau : MonoBehaviour
 {
     [SerializeField] Slider SliderTailleCuve;
     [SerializeField] Slider SliderHauteurReservoir;
@@ -15,7 +15,7 @@ public class NiveauWater : MonoBehaviour
     [SerializeField] TextMeshProUGUI TextHauteurReservoir;
     [SerializeField] TextMeshProUGUI TextDiamOrifice;
 
-    [SerializeField] GameObject Water;
+    [SerializeField] GameObject Eau;
 
     [SerializeField] GameObject fleche;
     [SerializeField] GameObject Ouverture;
@@ -32,7 +32,7 @@ public class NiveauWater : MonoBehaviour
     private Vector2 baseRectangleScale;
     private float tailleFleche;
     private Vector2 BaseArrowPos;
-    private float speedWater;
+    private float VEau;
     private float g = 9.81f;
     private float SurfaceEau;
     private float VolumeEau;
@@ -50,8 +50,8 @@ public class NiveauWater : MonoBehaviour
     void Start()
     {
         line = GetComponentInChildren<LineRenderer>();
-        baseRectanglePos = Water.transform.localPosition;
-        baseRectangleScale = Water.transform.localScale;
+        baseRectanglePos = Eau.transform.localPosition;
+        baseRectangleScale = Eau.transform.localScale;
         BaseArrowPos = fleche.transform.position;
         baseOuverturePos = Ouverture.transform.localPosition;
         Reset();
@@ -69,12 +69,12 @@ public class NiveauWater : MonoBehaviour
         SurfaceEau = 16;
         ht = H;
         VolumeEau = SurfaceEau * ht;
-        speedWater = Mathf.Sqrt(2 * g * ht);
+        VEau = Mathf.Sqrt(2 * g * ht);
 
 
         points = new List<Vector3>();
-        Water.transform.localScale = new Vector2(baseRectangleScale.x, ht);
-        Water.transform.localPosition = new Vector3(Water.transform.localPosition.x, baseRectanglePos.y + 0.5f * Water.transform.localScale.y, 1.0f);
+        Eau.transform.localScale = new Vector2(baseRectangleScale.x, ht);
+        Eau.transform.localPosition = new Vector3(Eau.transform.localPosition.x, baseRectanglePos.y + 0.5f * Eau.transform.localScale.y, 1.0f);
 
         fleche.transform.position = new Vector3(BaseArrowPos.x, BaseArrowPos.y, -0.5f);
         fleche.transform.localScale = new Vector2(0.5f, 0.07f);
@@ -102,15 +102,15 @@ public class NiveauWater : MonoBehaviour
                 startSimulation = false;
             }
 
-            speedWater = Mathf.Sqrt(2 * g * ht);
-            Debit = diamtru * speedWater;
+            VEau = Mathf.Sqrt(2 * g * ht);
+            Debit = diamtru * VEau;
             VolumeEau -= Debit * deltatime;
             ht = VolumeEau / SurfaceEau;
 
-            Water.transform.localScale = new Vector2(baseRectangleScale.x, ht);
-            Water.transform.localPosition = new Vector3(Water.transform.localPosition.x, baseRectanglePos.y + 0.5f * Water.transform.localScale.y, 1.0f);
+            Eau.transform.localScale = new Vector2(baseRectangleScale.x, ht);
+            Eau.transform.localPosition = new Vector3(Eau.transform.localPosition.x, baseRectanglePos.y + 0.5f * Eau.transform.localScale.y, 1.0f);
 
-            tailleFleche = Mathf.Sqrt(2 * hauteurReservoir / g) * speedWater;
+            tailleFleche = Mathf.Sqrt(2 * hauteurReservoir / g) * VEau;
             fleche.transform.localScale = new Vector2(tailleFleche, 0.1f);
             fleche.transform.position = new Vector3(positionOrifice.transform.position.x + 0.5f * fleche.transform.localScale.x, BaseArrowPos.y, -0.5f);
 
@@ -123,7 +123,7 @@ public class NiveauWater : MonoBehaviour
             while (time < limit)
             {
                 yPos = hauteurReservoir - 0.5f * g * time * time + 0.5f * diamtru;
-                xPos = positionOrifice.transform.position.x + time * speedWater;
+                xPos = positionOrifice.transform.position.x + time * VEau;
 
                 points.Add(new Vector2(xPos, yPos));
                 time += lineDeltaTime;
