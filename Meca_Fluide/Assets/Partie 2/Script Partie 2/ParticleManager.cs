@@ -9,7 +9,8 @@ public class ParticleManager : MonoBehaviour
 
     public static float kernelRadius = 5.0f;
     public static float dynamicViscosity = 0.1f;
-
+    public static float deltaT = 1 / 600.0f;
+    
     private static float poly6;
     private static float spikyGradConst;
     private static float viscLaplacienConst;
@@ -49,6 +50,11 @@ public class ParticleManager : MonoBehaviour
         }
 
         me.rho = sigmaW * me.mass;
+        if (me.rho == 0)
+        {
+            me.rho = referenceDensity;
+        }
+        
         me.pressure = stiffness * (me.rho - referenceDensity);
     }
 
@@ -85,14 +91,18 @@ public class ParticleManager : MonoBehaviour
         {
             foreach (Particle p in particles)
             {
-                CalcDensityAndPressure(p);
-                CalcForces(p);
+                if(p.isActive == true)
+                {
+                    CalcDensityAndPressure(p);
+                    CalcForces(p);
+                }
             }
         }
         
         foreach (Particle p in particles)
         {
-            p.UpdatePosition();
+            if (p.isActive == true)
+                p.UpdatePosition(deltaT);
         }
     }
 }
