@@ -9,6 +9,8 @@ public class Particle : MonoBehaviour
     public float mass = 0.02f;
     public float pressure;
 
+    public bool isActive = true;
+
     public Vector2 force = new Vector3( 0.0f, 0.0f );
     public Vector2 velocity = new Vector3( 0.0f, 0.0f);
 

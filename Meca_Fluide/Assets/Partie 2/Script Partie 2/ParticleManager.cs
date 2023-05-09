@@ -85,14 +85,18 @@ public class ParticleManager : MonoBehaviour
         {
             foreach (Particle p in particles)
             {
-                CalcDensityAndPressure(p);
-                CalcForces(p);
+                if(p.isActive == true)
+                {
+                    CalcDensityAndPressure(p);
+                    CalcForces(p);
+                }
             }
         }
         
         foreach (Particle p in particles)
         {
-            p.UpdatePosition();
+            if (p.isActive == true)
+                p.UpdatePosition();
         }
     }
 }
