@@ -2333,7 +2333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd8c4287acedc1d41b86746c78bdec3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleManager: {fileID: 0}
+  particleManager: {fileID: 1275682840}
 --- !u!61 &1045919121
 BoxCollider2D:
   m_ObjectHideFlags: 0
