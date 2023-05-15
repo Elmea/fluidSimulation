@@ -11,10 +11,8 @@ public class KillZone : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("ParticuleEau"))
         {
-            collision.gameObject.GetComponent<Particle>().isActive = false;
-            collision.gameObject.SetActive(false);
-            //Destroy(collision.gameObject);
-            //particleManager.particles.Remove(collision.gameObject.GetComponent<Particle>());
+            particleManager.particles.Remove(collision.gameObject.GetComponent<Particle>());
+            Destroy(collision.gameObject);
         }
     }
     void Start()
