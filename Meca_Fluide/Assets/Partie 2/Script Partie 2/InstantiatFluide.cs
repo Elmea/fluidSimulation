@@ -20,6 +20,7 @@ public class InstantiatFluide : MonoBehaviour
         {
             GameObject instantiated = Instantiate(fluideParticle, transform.position, transform.rotation);
             particleManager.particles.Add(instantiated.GetComponent<Particle>());
+            open = false;
         }
     }
 }

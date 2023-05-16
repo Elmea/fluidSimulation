@@ -9,14 +9,14 @@ public class ParticleManager : MonoBehaviour
 
     public static float kernelRadius = 1.0f;
     public static float dynamicViscosity = 0.1f;
-    public static float deltaT = 1 / 600.0f;
+    public static float deltaT = 1 / 60.0f;
     
     private static float poly6;
     private static float spikyGradConst;
     private static float viscLaplacienConst;
 
     public float stiffness = 3.0f;
-    public float referenceDensity = 1000.0f;
+    public float referenceDensity = 1.0f;
     private Vector2 g = new Vector2(0.0f, -9.81f); 
 
     private void Start()
@@ -46,7 +46,7 @@ public class ParticleManager : MonoBehaviour
 
             if (lenght < kernelRadius)
             {
-                sigmaW += poly6 * Mathf.Pow(kernelRadius * kernelRadius - lenght * lenght, 3);
+                sigmaW += poly6 * Mathf.Pow(kernelRadius * kernelRadius - lenght * lenght, 6);
             }
         }
 
@@ -54,15 +54,17 @@ public class ParticleManager : MonoBehaviour
         if (me.rho == 0)
         {
             me.rho = referenceDensity;
+            
         }
         
-        me.pressure = stiffness * (me.rho - referenceDensity);
+        me.pressure = stiffness * (me.rho);
     }
 
     private void CalcForces(Particle me)
     {   
         Vector2 sigmaPress = new Vector3( 0.0f, 0.0f );
         Vector2 sigmaVisc = new Vector3( 0.0f, 0.0f );
+        
         foreach (Particle other in particles)
         {
             if (me == other)
@@ -70,14 +72,14 @@ public class ParticleManager : MonoBehaviour
             Vector2 distVec = other.transform.position - me.transform.position;
             float lenght = distVec.magnitude;
 
-            if (lenght < kernelRadius && lenght > 0)
+            if (lenght < kernelRadius && lenght > 0.02f)
             {
-                sigmaPress += (me.pressure + other.pressure) / (2 * other.rho) * 
-                             spikyGradConst * distVec.normalized
-                             * MathF.Pow(kernelRadius - lenght, 2);
+                sigmaPress += distVec.normalized * ((me.pressure + other.pressure) / (2 * other.rho) * 
+                                                    spikyGradConst * MathF.Pow(kernelRadius - lenght, 2));
 
-                sigmaVisc +=  (other.velocity - me.velocity) / other.rho 
-                            * viscLaplacienConst * (kernelRadius - lenght);
+                // Debug.Log(sigmaPress);
+                
+                sigmaVisc +=  (other.velocity - me.velocity) / other.rho * (viscLaplacienConst * (kernelRadius - lenght));
             }
         }
 
@@ -100,7 +102,7 @@ public class ParticleManager : MonoBehaviour
         
         foreach (Particle p in particles)
         {
-            p.UpdatePosition(deltaT);
+            p.UpdatePosition(Time.deltaTime);
         }
     }
 }
