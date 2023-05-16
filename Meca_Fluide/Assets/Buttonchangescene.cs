@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class Buttonchangescene : MonoBehaviour
 {
+    [SerializeField] GameObject GM;
+    bool open = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        GM.SetActive(open);
     }
 
     // Update is called once per frame
@@ -20,13 +22,17 @@ public class Buttonchangescene : MonoBehaviour
 
     public void OnClickScene1()
     {
-        //SceneManager.UnloadScene("Scene Partie 2 ");
-        SceneManager.LoadScene("Scene Parie 1");
+        SceneManager.LoadScene(1);
     }
 
     public void OnClickScene2()
     {
-        //SceneManager.UnloadScene("Scene Partie 1 ");
-        SceneManager.LoadScene("Scene Parie 2");
+        SceneManager.LoadScene(2);
+    }
+
+    public void OnClickOpen()
+    {
+        open = !open;
+        GM.SetActive(open);
     }
 }
