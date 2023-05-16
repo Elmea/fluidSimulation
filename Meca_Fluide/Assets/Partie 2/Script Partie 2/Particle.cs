@@ -9,8 +9,6 @@ public class Particle : MonoBehaviour
     public float mass = 0.02f;
     public float pressure;
 
-    private Vector2 lastForce = new Vector3( 0.0f, 0.0f );
-    
     public Vector2 acceleration = new Vector3( 0.0f, 0.0f );
     public Vector2 force = new Vector3( 0.0f, 0.0f );
     public Vector2 velocity = new Vector3( 0.0f, 0.0f);
@@ -22,7 +20,6 @@ public class Particle : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        Debug.Log("Oui");
         Particle particle = collision.gameObject.GetComponent<Particle>();
         if (particle != null)
         {
@@ -30,25 +27,31 @@ public class Particle : MonoBehaviour
         }
         else
         {
+            float sign = 1;
+
+            if (collision.gameObject.transform.rotation.eulerAngles.z > 180)
+                sign = -1;
+            
             Vector2 externalForce = new Vector2();
-            Vector2 normal = collision.contacts[0].normal; 
-            float mag = Mathf.Abs(Vector2.Dot(lastForce, normal));
-            externalForce = normal.normalized * mag;
+            Vector2 normal = collision.GetContact(0).normal;
+
+            float angle = Vector2.Angle(sign * normal, velocity);
+            float magX = Mathf.Cos(Mathf.Deg2Rad * angle) * velocity.magnitude;
+            float magY = Mathf.Sin(Mathf.Deg2Rad * angle) * velocity.magnitude;
+
+            externalForce.x = magX / rho;
+            externalForce.y = magY / rho;
+
             force += externalForce;
+            Debug.Log(sign);
         }
     }
 
     public void UpdatePosition(float deltaT)
     {
-        Debug.Log(force);
         acceleration = force / mass;
         velocity += acceleration * deltaT;
         transform.position += deltaT * new Vector3(velocity.x, velocity.y, 0);
-    }
-
-    private void LateUpdate()
-    {
-        lastForce = force;
-        force = new Vector3(0.0f, 0.0f);
+        force = new Vector2(0, 0);
     }
 }

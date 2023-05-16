@@ -8,8 +8,8 @@ public class ParticleManager : MonoBehaviour
     public List<Particle> particles;
 
     public static float kernelRadius = 1.0f;
-    public static float dynamicViscosity = 0.1f;
-    public static float deltaT = 1 / 60.0f;
+    public static float dynamicViscosity = 0.0f;
+    public static float deltaT = 1 / 6000.0f;
     
     private static float poly6;
     private static float spikyGradConst;
@@ -62,6 +62,7 @@ public class ParticleManager : MonoBehaviour
 
     private void CalcForces(Particle me)
     {   
+
         Vector2 sigmaPress = new Vector3( 0.0f, 0.0f );
         Vector2 sigmaVisc = new Vector3( 0.0f, 0.0f );
         
@@ -102,7 +103,7 @@ public class ParticleManager : MonoBehaviour
         
         foreach (Particle p in particles)
         {
-            p.UpdatePosition(Time.deltaTime);
+            p.UpdatePosition(deltaT);
         }
     }
 }
