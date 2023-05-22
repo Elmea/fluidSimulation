@@ -14,6 +14,7 @@ public class NiveauEau : MonoBehaviour
     [SerializeField] TextMeshProUGUI TextTailleCuve;
     [SerializeField] TextMeshProUGUI TextHauteurReservoir;
     [SerializeField] TextMeshProUGUI TextDiamOrifice;
+    [SerializeField] TextMeshProUGUI TextDistanceProjection;
 
     [SerializeField] GameObject Eau;
 
@@ -86,6 +87,11 @@ public class NiveauEau : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        if (tailleFleche < 0.09)
+            tailleFleche = 0;
+        TextDistanceProjection.text = "Distance de projection : " + tailleFleche + "m";
+
         if(ht != 0)
             timer += Time.deltaTime;
 
