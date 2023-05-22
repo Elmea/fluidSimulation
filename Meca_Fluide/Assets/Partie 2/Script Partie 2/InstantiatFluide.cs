@@ -7,6 +7,7 @@ public class InstantiatFluide : MonoBehaviour
     [SerializeField] GameObject fluideParticle;
     [SerializeField] private ParticleManager particleManager;
     public bool open = false;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,9 @@ public class InstantiatFluide : MonoBehaviour
         if(open)
         {
             GameObject instantiated = Instantiate(fluideParticle, transform.position, transform.rotation);
-            particleManager.particles.Add(instantiated.GetComponent<Particle>());
+            particleManager.particles.Add(instantiated.GetComponent<Particle>()); 
+            open = false;
         }
+
     }
 }
