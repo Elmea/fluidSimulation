@@ -8,7 +8,6 @@ public class ParticleManager : MonoBehaviour
     public List<Particle> particles;
 
     public static float kernelRadius = 1.0f;
-    public static float dynamicViscosity = 0.0f;
     public static float deltaT = 1 / 60.0f;
     
     private static float poly6;
@@ -17,6 +16,7 @@ public class ParticleManager : MonoBehaviour
 
     public float stiffness = 3.0f;
     public float referenceDensity = 1.0f;
+    public float dynamicViscosity = 1.0f;
     private Vector2 g = new Vector2(0.0f, -9.81f); 
 
     private void Start()
@@ -50,14 +50,9 @@ public class ParticleManager : MonoBehaviour
             }
         }
 
-        me.rho = sigmaW * me.mass;
-        if (me.rho == 0)
-        {
-            me.rho = referenceDensity;
-            
-        }
+        me.rho = referenceDensity + sigmaW * me.mass;
         
-        me.pressure = stiffness * (me.rho);
+        me.pressure = stiffness * me.rho;
     }
 
     private void CalcForces(Particle me)
@@ -84,7 +79,7 @@ public class ParticleManager : MonoBehaviour
             }
         }
 
-        me.force += -me.mass * sigmaPress;
+        me.force += me.mass * sigmaPress;
         me.force += dynamicViscosity * me.mass * sigmaVisc;
         me.force += me.rho * g;
     }
@@ -92,17 +87,12 @@ public class ParticleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (particles.Count > 0)
-        {
-            foreach (Particle p in particles)
-            {
-                CalcDensityAndPressure(p);
-                CalcForces(p);
-            }
-        }
-        
+        foreach (Particle p in particles)
+            CalcDensityAndPressure(p);
+
         foreach (Particle p in particles)
         {
+            CalcForces(p);
             p.UpdatePosition(deltaT);
         }
     }
