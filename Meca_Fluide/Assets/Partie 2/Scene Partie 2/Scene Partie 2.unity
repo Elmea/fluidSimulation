@@ -2854,7 +2854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particles: []
   stiffness: 3
-  referenceDensity: 1000
+  referenceDensity: 1
 --- !u!4 &1275682841
 Transform:
   m_ObjectHideFlags: 0

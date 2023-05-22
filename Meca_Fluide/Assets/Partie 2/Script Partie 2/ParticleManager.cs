@@ -9,7 +9,7 @@ public class ParticleManager : MonoBehaviour
 
     public static float kernelRadius = 1.0f;
     public static float dynamicViscosity = 0.0f;
-    public static float deltaT = 1 / 6000.0f;
+    public static float deltaT = 1 / 60.0f;
     
     private static float poly6;
     private static float spikyGradConst;
