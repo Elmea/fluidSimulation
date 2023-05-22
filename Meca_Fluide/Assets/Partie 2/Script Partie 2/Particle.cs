@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Particle : MonoBehaviour
 {
-    public float rho = 1.0f;
-    public float mass = 0.02f;
+    public float rho = 1.0f;//densiter
+    public float mass = 0.02f;//mass
     public float pressure;
 
     public bool isActive = true;

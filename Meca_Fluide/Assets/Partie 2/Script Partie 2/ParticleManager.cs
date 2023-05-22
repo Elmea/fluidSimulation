@@ -2,9 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class ParticleManager : MonoBehaviour
 {
+    [SerializeField] Slider MassSlider;
+    [SerializeField] Slider DensiterSlider;
+    [SerializeField] TextMeshProUGUI MassText;
+    [SerializeField] TextMeshProUGUI DensiterText;
+
     public List<Particle> particles;
 
     public static float kernelRadius = 5.0f;
@@ -20,6 +27,8 @@ public class ParticleManager : MonoBehaviour
 
     private void Start()
     {
+        MassSlider.value = 0.02f;
+        DensiterSlider.value = 1.0f;
         RecalcConstants();
     }
 
@@ -99,6 +108,10 @@ public class ParticleManager : MonoBehaviour
         foreach (Particle p in particles)
         {
             p.UpdatePosition(deltaT);
+            p.mass = MassSlider.value;
+            p.rho = DensiterSlider.value;
+            MassText.text = "Mass : " + p.mass;
+            DensiterText.text = "Densiter : " + p.rho;
         }
     }
 }
