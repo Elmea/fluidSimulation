@@ -15,6 +15,8 @@ public class NiveauEau : MonoBehaviour
     [SerializeField] TextMeshProUGUI TextHauteurReservoir;
     [SerializeField] TextMeshProUGUI TextDiamOrifice;
     [SerializeField] TextMeshProUGUI TextDistanceProjection;
+    [SerializeField] TextMeshProUGUI TextVolumeCuve;
+    [SerializeField] TextMeshProUGUI TextHauteurLiquide;
 
     [SerializeField] GameObject Eau;
 
@@ -92,7 +94,16 @@ public class NiveauEau : MonoBehaviour
             tailleFleche = 0;
         TextDistanceProjection.text = "Distance de projection : " + tailleFleche + "m";
 
-        if(ht != 0)
+        if (ht< 0.09)
+            ht = 0;
+        TextHauteurLiquide.text = "Hauteur Liquide : " + ht + "m";
+
+        if (VolumeEau < 1.5)
+            VolumeEau = 0;
+        TextVolumeCuve.text = "Volume cuve : " + VolumeEau + "m^3";
+
+
+        if (ht != 0)
             timer += Time.deltaTime;
 
         H = SliderTailleCuve.value;
