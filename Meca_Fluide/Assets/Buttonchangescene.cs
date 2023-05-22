@@ -11,7 +11,7 @@ public class Buttonchangescene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GM.SetActive(open);
+        //GM.SetActive(open);
     }
 
     // Update is called once per frame
