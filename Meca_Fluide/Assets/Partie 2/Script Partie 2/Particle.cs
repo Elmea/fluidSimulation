@@ -24,26 +24,16 @@ public class Particle : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-         if (collision.gameObject.layer == 3)
-             return;
-        
+        if (collision.gameObject.layer == 3)
+            return;
+
         Vector2 externalForce = new Vector2();
         Vector2 normal = collision.GetContact(0).normal;
-        float vel = Mathf.Abs(Vector2.Dot(normal, velocity / ParticleManager.deltaT));
-        Debug.Log(vel);
+        float mag = -(mass + 100.0f) * Vector2.Dot(this.lastVelocity, normal);
+        Debug.Log(mag);
+
+        externalForce = mag * normal;
         
-        float sign = 1;
-
-        if (collision.gameObject.transform.rotation.eulerAngles.z >= 180)
-            sign = -1;
-        
-        float angle = Vector2.Angle(lastForce, sign * normal);
-        float angleVel = Vector2.Angle(velocity, sign * normal);
-
-        externalForce.x = Mathf.Cos(Mathf.Deg2Rad * angle) * (lastForce.magnitude + colisionForce.magnitude) + Mathf.Cos(Mathf.Deg2Rad * angleVel) * vel ;
-        externalForce.y = Mathf.Sin(Mathf.Deg2Rad * angle) * (lastForce.magnitude + colisionForce.magnitude) + Mathf.Sin(Mathf.Deg2Rad * angleVel) * vel ;
-
-        colisionForce += externalForce;
         force += externalForce;
     }
 
