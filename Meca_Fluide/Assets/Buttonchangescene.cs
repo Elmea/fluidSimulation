@@ -22,12 +22,12 @@ public class Buttonchangescene : MonoBehaviour
 
     public void OnClickScene1()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 
     public void OnClickScene2()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
 
     public void OnClickOpen()
