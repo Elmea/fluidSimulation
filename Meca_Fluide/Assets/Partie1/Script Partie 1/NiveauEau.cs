@@ -17,6 +17,7 @@ public class NiveauEau : MonoBehaviour
     [SerializeField] TextMeshProUGUI TextDistanceProjection;
     [SerializeField] TextMeshProUGUI TextVolumeCuve;
     [SerializeField] TextMeshProUGUI TextHauteurLiquide;
+    [SerializeField] TextMeshProUGUI TempsVidange;
 
     [SerializeField] GameObject Eau;
 
@@ -84,6 +85,7 @@ public class NiveauEau : MonoBehaviour
 
         fleche.transform.position = new Vector3(BaseArrowPos.x, BaseArrowPos.y, -10.5f);
         fleche.transform.localScale = new Vector2(0.5f, 0.07f);
+        timer = 0;
     }
 
     // Update is called once per frame
@@ -103,8 +105,7 @@ public class NiveauEau : MonoBehaviour
         TextVolumeCuve.text = "Volume cuve : " + VolumeEau + "m^3";
 
 
-        if (ht != 0)
-            timer += Time.deltaTime;
+        
 
         H = SliderTailleCuve.value;
         hauteurReservoir = SliderHauteurReservoir.value + 0.2f;
@@ -112,6 +113,7 @@ public class NiveauEau : MonoBehaviour
         TextTailleCuve.text = "H: " + H;
         TextHauteurReservoir.text = "Hauteur Reservoir: " + hauteurReservoir;
         TextDiamOrifice.text = "Diametre trou: " + diamtru;
+        TempsVidange.text = "TempsVidange : " + timer;
 
         transform.position = new Vector3(transform.position.x, hauteurReservoir - 3.84f);
 
@@ -119,6 +121,9 @@ public class NiveauEau : MonoBehaviour
 
         if (startSimulation)
         {
+
+            if (ht != 0)
+                timer += Time.deltaTime;
             if (tailleFleche <= 0.05f)
             {
                 startSimulation = false;
@@ -158,6 +163,7 @@ public class NiveauEau : MonoBehaviour
 
             line.positionCount = pointAdded;
             line.SetPositions(points.ToArray());
+            
         }
         else
         {

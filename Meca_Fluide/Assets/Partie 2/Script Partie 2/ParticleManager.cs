@@ -9,8 +9,11 @@ public class ParticleManager : MonoBehaviour
 {
     [SerializeField] Slider MassSlider;
     [SerializeField] Slider DensiterSlider;
+    [SerializeField] Slider ViscositéSlider;
     [SerializeField] TextMeshProUGUI MassText;
     [SerializeField] TextMeshProUGUI DensiterText;
+    [SerializeField] TextMeshProUGUI ViscositéText;
+    [SerializeField] TextMeshProUGUI NbParticles;
 
     public List<Particle> particles;
 
@@ -30,6 +33,7 @@ public class ParticleManager : MonoBehaviour
     {
         MassSlider.value = 0.02f;
         DensiterSlider.value = 1.0f;
+        ViscositéSlider.value = dynamicViscosity;
         RecalcConstants();
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
@@ -105,8 +109,11 @@ public class ParticleManager : MonoBehaviour
             p.UpdatePosition(Time.deltaTime);
             p.mass = MassSlider.value;
             p.rho = DensiterSlider.value;
+            dynamicViscosity = ViscositéSlider.value;
             MassText.text = "Mass : " + p.mass;
-            DensiterText.text = "Densiter : " + p.rho;
+            DensiterText.text = "Densité : " + p.rho;
+            ViscositéText.text = "Viscosité : " + dynamicViscosity;
+            NbParticles.text = "Nombre Particule : " + particles.Count;
         }
     }
 }
