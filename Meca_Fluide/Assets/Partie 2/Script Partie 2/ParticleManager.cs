@@ -10,9 +10,11 @@ public class ParticleManager : MonoBehaviour
     [SerializeField] Slider MassSlider;
     [SerializeField] Slider DensiterSlider;
     [SerializeField] Slider ViscositySlider;
+    [SerializeField] Slider RigiditySlider;
     [SerializeField] TextMeshProUGUI MassText;
     [SerializeField] TextMeshProUGUI DensiteText;
     [SerializeField] TextMeshProUGUI ViscosityText;
+    [SerializeField] TextMeshProUGUI RigidityText;
     [SerializeField] TextMeshProUGUI NbParticles;
 
     
