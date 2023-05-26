@@ -13,9 +13,9 @@ public class ParticleManager : MonoBehaviour
     private static float spikyGradConst;
     private static float viscLaplacienConst;
 
-    public float stiffness = 3.0f;
-    public float referenceDensity = 1.0f;
-    public float dynamicViscosity = 1.0f;
+    public float stiffness = 500;
+    public float referenceDensity = 25.0f;
+    public float dynamicViscosity = 500.0f;
     private Vector2 g = new Vector2(0.0f, -9.81f); 
 
     private void Start()
