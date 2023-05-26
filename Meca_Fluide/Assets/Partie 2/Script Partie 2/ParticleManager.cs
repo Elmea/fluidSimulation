@@ -15,6 +15,8 @@ public class ParticleManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI ViscosityText;
     [SerializeField] TextMeshProUGUI NbParticles;
 
+    
+
     public List<Particle> particles;
 
     public static float kernelRadius = 1.5f;
