@@ -52,7 +52,7 @@ public class ParticleManager : MonoBehaviour
         }
 
         me.rho = referenceDensity + sigmaW * me.mass;
-        me.pressure = stiffness * me.rho;
+        me.pressure = stiffness * (me.rho - referenceDensity);
     }
 
     private void CalcForces(Particle me)
