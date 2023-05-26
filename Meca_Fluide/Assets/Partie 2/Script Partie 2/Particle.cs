@@ -9,8 +9,6 @@ public class Particle : MonoBehaviour
     public float mass = 0.02f;
     public float pressure;
 
-    private Vector2 lastForce = new Vector3( 0.0f, 0.0f );
-    private Vector2 colisionForce = new Vector3( 0.0f, 0.0f );
     private Vector2 lastVelocity = new Vector3( 0.0f, 0.0f);
 
     public Vector2 acceleration = new Vector3( 0.0f, 0.0f );
@@ -43,8 +41,6 @@ public class Particle : MonoBehaviour
         lastVelocity = velocity;  
         velocity += acceleration * deltaT;
         transform.position += deltaT * new Vector3(velocity.x, velocity.y, 0);
-        lastForce = force;
         force = new Vector2(0, 0);
-        colisionForce = new Vector2(0, 0);
     }
 }
