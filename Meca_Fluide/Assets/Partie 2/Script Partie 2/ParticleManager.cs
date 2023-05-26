@@ -31,8 +31,8 @@ public class ParticleManager : MonoBehaviour
 
     private void Start()
     {
-        MassSlider.value = 0.018f;
-        DensiteSlider.value = 100.0f;
+        MassSlider.value = 0.02f;
+        DensiteSlider.value = 25.0f;
         ViscositySlider.value = 500.0f;
         RecalcConstants();
         QualitySettings.vSyncCount = 0;
