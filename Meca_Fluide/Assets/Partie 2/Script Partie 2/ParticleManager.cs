@@ -2,9 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class ParticleManager : MonoBehaviour
 {
+    [SerializeField] Slider MassSlider;
+    [SerializeField] Slider DensiterSlider;
+    [SerializeField] Slider ViscositéSlider;
+    [SerializeField] TextMeshProUGUI MassText;
+    [SerializeField] TextMeshProUGUI DensiterText;
+    [SerializeField] TextMeshProUGUI ViscositéText;
+    [SerializeField] TextMeshProUGUI NbParticles;
+
     public List<Particle> particles;
 
     public static float kernelRadius = 1.5f;
@@ -20,6 +30,9 @@ public class ParticleManager : MonoBehaviour
 
     private void Start()
     {
+        MassSlider.value = 0.02f;
+        DensiterSlider.value = 1.0f;
+        ViscositéSlider.value = dynamicViscosity;
         RecalcConstants();
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
@@ -91,6 +104,15 @@ public class ParticleManager : MonoBehaviour
             CalcForces(p);
         
         foreach (Particle p in particles)
+        {
             p.UpdatePosition(Time.deltaTime);
+            p.mass = MassSlider.value;
+            p.rho = DensiterSlider.value;
+            dynamicViscosity = ViscositéSlider.value;
+            MassText.text = "Mass : " + p.mass;
+            DensiterText.text = "Densité : " + p.rho;
+            ViscositéText.text = "Viscosité : " + dynamicViscosity;
+            NbParticles.text = "Nombre Particule : " + particles.Count;
+        }
     }
 }
