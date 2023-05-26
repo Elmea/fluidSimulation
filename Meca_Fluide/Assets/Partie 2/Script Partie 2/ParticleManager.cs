@@ -107,10 +107,6 @@ public class ParticleManager : MonoBehaviour
         foreach (Particle p in particles)
         {
             p.UpdatePosition(Time.deltaTime);
-            p.mass = MassSlider.value;
-            p.rho = DensiteSlider.value;
-            p.dynamicViscosity = ViscositySlider.value;
-            p.stiffness = RigiditySlider.value;
         }
 
         MassText.text = "Mass : " + MassSlider.value;

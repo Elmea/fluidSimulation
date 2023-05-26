@@ -123,7 +123,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.55
+  m_Radius: 0.5
 --- !u!114 &-4973151590683905705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,3 +142,6 @@ MonoBehaviour:
   acceleration: {x: 0, y: 0}
   force: {x: 0, y: 0}
   velocity: {x: 0, y: 0}
+  stiffness: 10000
+  referenceDensity: 25
+  dynamicViscosity: 500
