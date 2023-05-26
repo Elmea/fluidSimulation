@@ -6,6 +6,7 @@ public class InstantiatFluide : MonoBehaviour
 {
     [SerializeField] GameObject fluideParticle;
     [SerializeField] private ParticleManager particleManager;
+    [SerializeField] FlexibleColorPicker color;
     public bool open = false;
     
     // Update is called once per frame
@@ -20,6 +21,7 @@ public class InstantiatFluide : MonoBehaviour
             }
 
             GameObject instantiated = Instantiate(fluideParticle, transform.position, transform.rotation);
+            instantiated.GetComponent<SpriteRenderer>().color = color.color;
             particleManager.particles.Add(instantiated.GetComponent<Particle>());
         }
     }
