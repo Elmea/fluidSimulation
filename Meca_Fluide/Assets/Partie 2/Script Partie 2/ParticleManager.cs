@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,8 +15,6 @@ public class ParticleManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI ViscosityText;
     [SerializeField] TextMeshProUGUI RigidityText;
     [SerializeField] TextMeshProUGUI NbParticles;
-
-    
 
     public List<Particle> particles;
 
@@ -44,6 +41,7 @@ public class ParticleManager : MonoBehaviour
     // This function should be call when the kernel radius is modified.
     public void RecalcConstants()
     {
+        // Correspond au constante des kernels pour les calculs de forces
         poly6 = 315.0f/(64.0f * Mathf.PI * Mathf.Pow(kernelRadius, 9));
         spikyGradConst = -45.0f / (Mathf.PI * Mathf.Pow(kernelRadius, 5.0f));
         viscLaplacienConst = 45/(Mathf.PI * Mathf.Pow(kernelRadius, 6));
@@ -92,24 +90,31 @@ public class ParticleManager : MonoBehaviour
             }
         }
 
+        // Calcul de la force de pression
         me.force += me.mass * sigmaPress;
+
+        // Calcul de la force de viscosite
         me.force += me.dynamicViscosity * me.mass * sigmaVisc;
+
+        // Calcul de la force de gravite
         me.force += me.rho * g;
     }
     
     // Update is called once per frame
     void Update()
     {
+        
+        // Correspond au calcul de la densite et de la pression dans le rapport
         foreach (Particle p in particles)
             CalcDensityAndPressure(p);
 
+        // Corresond au calcul des forces dans le rapport
         foreach (Particle p in particles)
             CalcForces(p);
         
+        // Application de la troisieme loi de newton et du system d'Euler
         foreach (Particle p in particles)
-        {
             p.UpdatePosition(Time.deltaTime);
-        }
 
         MassText.text = "Mass : " + MassSlider.value;
         DensiteText.text = "Densite : " + DensiteSlider.value;

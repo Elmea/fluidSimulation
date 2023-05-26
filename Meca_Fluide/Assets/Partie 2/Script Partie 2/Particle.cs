@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Particle : MonoBehaviour
@@ -22,6 +19,7 @@ public class Particle : MonoBehaviour
         velocity = new Vector3( 0.0f, 0.0f);
     }
 
+    // Gestion de la collision
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 3)
@@ -29,14 +27,16 @@ public class Particle : MonoBehaviour
 
         Vector2 externalForce = new Vector2();
         Vector2 normal = collision.GetContact(0).normal;
+        
+        // Calcul de la force de reaction
         float mag = -(mass + 100.0f) * Vector2.Dot(this.velocity, normal);
-        Debug.Log(mag);
-
         externalForce = mag * normal;
         
+        // On ajoute la force de reaction au systeme
         force += externalForce;
     }
 
+    // Application de la troisieme loi de newton et du system d'Euler
     public void UpdatePosition(float deltaT)
     {
         acceleration = force * mass;
