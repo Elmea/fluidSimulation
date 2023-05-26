@@ -2798,7 +2798,7 @@ MonoBehaviour:
   ViscosityText: {fileID: 1744634775}
   NbParticles: {fileID: 1532435608}
   particles: []
-  stiffness: 500
+  stiffness: 10000
   referenceDensity: 25
   dynamicViscosity: 500
 --- !u!4 &1275682841
