@@ -20,7 +20,11 @@ public class InstantiatFluide : MonoBehaviour
             }
 
             GameObject instantiated = Instantiate(fluideParticle, transform.position, transform.rotation);
-            particleManager.particles.Add(instantiated.GetComponent<Particle>());
+            Particle newOne = instantiated.GetComponent<Particle>();
+            newOne.mass = particleManager.MassSlider.value;
+            newOne.referenceDensity = particleManager.DensiteSlider.value;
+            newOne.dynamicViscosity = particleManager.ViscositySlider.value;
+            particleManager.particles.Add(newOne);
         }
     }
 }
