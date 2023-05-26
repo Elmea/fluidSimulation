@@ -2663,7 +2663,7 @@ MonoBehaviour:
   "Viscosit\xE9Text": {fileID: 70213643}
   NbParticles: {fileID: 1532435608}
   particles: []
-  stiffness: 3
+  stiffness: 500
   referenceDensity: 25
   dynamicViscosity: 500
 --- !u!4 &1275682841
@@ -4490,14 +4490,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1942125848}
-  m_LocalRotation: {x: -0, y: -0, z: -0.09704516, w: 0.99528}
-  m_LocalPosition: {x: 3.97, y: -4.89, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.037766706, w: 0.9992866}
+  m_LocalPosition: {x: -8.56, y: -5.93, z: 0}
   m_LocalScale: {x: 71.41664, y: 15.13, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -11.138}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -4.329}
 --- !u!1 &1948484307
 GameObject:
   m_ObjectHideFlags: 0
