@@ -9,10 +9,10 @@ public class ParticleManager : MonoBehaviour
 {
     [SerializeField] Slider MassSlider;
     [SerializeField] Slider DensiterSlider;
-    [SerializeField] Slider ViscositéSlider;
+    [SerializeField] Slider ViscositySlider;
     [SerializeField] TextMeshProUGUI MassText;
-    [SerializeField] TextMeshProUGUI DensiterText;
-    [SerializeField] TextMeshProUGUI ViscositéText;
+    [SerializeField] TextMeshProUGUI DensiteText;
+    [SerializeField] TextMeshProUGUI ViscosityText;
     [SerializeField] TextMeshProUGUI NbParticles;
 
     public List<Particle> particles;
@@ -32,11 +32,11 @@ public class ParticleManager : MonoBehaviour
     {
         MassSlider.value = 0.02f;
         DensiterSlider.value = 1.0f;
-        ViscositéSlider.value = dynamicViscosity;
+        ViscositySlider.value = dynamicViscosity;
         RecalcConstants();
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
-    }
+    }   
 
     // This function should be call when the kernel radius is modified.
     public void RecalcConstants()
@@ -108,10 +108,10 @@ public class ParticleManager : MonoBehaviour
             p.UpdatePosition(Time.deltaTime);
             p.mass = MassSlider.value;
             p.rho = DensiterSlider.value;
-            dynamicViscosity = ViscositéSlider.value;
+            dynamicViscosity = ViscositySlider.value;
             MassText.text = "Mass : " + p.mass;
-            DensiterText.text = "Densité : " + p.rho;
-            ViscositéText.text = "Viscosité : " + dynamicViscosity;
+            DensiteText.text = "Densitï¿½ : " + p.rho;
+            ViscosityText.text = "Viscositï¿½ : " + dynamicViscosity;
             NbParticles.text = "Nombre Particule : " + particles.Count;
         }
     }
