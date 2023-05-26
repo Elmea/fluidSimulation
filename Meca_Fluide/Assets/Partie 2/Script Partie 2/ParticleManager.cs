@@ -31,9 +31,11 @@ public class ParticleManager : MonoBehaviour
 
     private void Start()
     {
-        MassSlider.value = 0.02f;
-        DensiteSlider.value = 25.0f;
+        MassSlider.value = 0.1f;
+        DensiteSlider.value = 35.0f;
         ViscositySlider.value = 500.0f;
+        RigiditySlider.value = 10000.0f;
+
         RecalcConstants();
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;

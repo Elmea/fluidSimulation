@@ -21,7 +21,7 @@ public class InstantiatFluide : MonoBehaviour
     {
         if(open)
         {
-            if (particleManager.particles.Count > 260)
+            if (particleManager.particles.Count > 200)
             {
                 open = false;
                 return;
