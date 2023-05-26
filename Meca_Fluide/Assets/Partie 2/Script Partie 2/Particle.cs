@@ -24,32 +24,27 @@ public class Particle : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        Particle particle = collision.gameObject.GetComponent<Particle>();
-        if (particle != null)
-        {
-            // Collision with other particle stuffs
-        }
-        else
-        {
-            Vector2 externalForce = new Vector2();
-            Vector2 normal = collision.GetContact(0).normal;
-            float vel = Mathf.Abs(Vector2.Dot(normal, velocity / ParticleManager.deltaT));
-            Debug.Log(vel);
-            
-            float sign = 1;
+         if (collision.gameObject.layer == 3)
+             return;
+        
+        Vector2 externalForce = new Vector2();
+        Vector2 normal = collision.GetContact(0).normal;
+        float vel = Mathf.Abs(Vector2.Dot(normal, velocity / ParticleManager.deltaT));
+        Debug.Log(vel);
+        
+        float sign = 1;
 
-            if (collision.gameObject.transform.rotation.eulerAngles.z >= 180)
-                sign = -1;
-            
-            float angle = Vector2.Angle(lastForce, sign * normal);
-            float angleVel = Vector2.Angle(velocity, sign * normal);
+        if (collision.gameObject.transform.rotation.eulerAngles.z >= 180)
+            sign = -1;
+        
+        float angle = Vector2.Angle(lastForce, sign * normal);
+        float angleVel = Vector2.Angle(velocity, sign * normal);
 
-            externalForce.x = Mathf.Cos(Mathf.Deg2Rad * angle) * (lastForce.magnitude + colisionForce.magnitude) + Mathf.Cos(Mathf.Deg2Rad * angleVel) * vel ;
-            externalForce.y = Mathf.Sin(Mathf.Deg2Rad * angle) * (lastForce.magnitude + colisionForce.magnitude) + Mathf.Sin(Mathf.Deg2Rad * angleVel) * vel ;
+        externalForce.x = Mathf.Cos(Mathf.Deg2Rad * angle) * (lastForce.magnitude + colisionForce.magnitude) + Mathf.Cos(Mathf.Deg2Rad * angleVel) * vel ;
+        externalForce.y = Mathf.Sin(Mathf.Deg2Rad * angle) * (lastForce.magnitude + colisionForce.magnitude) + Mathf.Sin(Mathf.Deg2Rad * angleVel) * vel ;
 
-            colisionForce += externalForce;
-            force += externalForce;
-        }
+        colisionForce += externalForce;
+        force += externalForce;
     }
 
     public void UpdatePosition(float deltaT)

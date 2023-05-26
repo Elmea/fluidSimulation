@@ -31,6 +31,8 @@ public class ParticleManager : MonoBehaviour
         MassSlider.value = 0.02f;
         DensiterSlider.value = 1.0f;
         RecalcConstants();
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
     }
 
     // This function should be call when the kernel radius is modified.
@@ -50,8 +52,8 @@ public class ParticleManager : MonoBehaviour
         {
             if (me == other)
                 continue;
-            Vector2 distVec = other.transform.position - me.transform.position;
-            float lenght = distVec.magnitude;
+            
+            float lenght = (other.transform.position - me.transform.position).magnitude;
 
             if (lenght < kernelRadius)
             {
@@ -60,7 +62,6 @@ public class ParticleManager : MonoBehaviour
         }
 
         me.rho = referenceDensity + sigmaW * me.mass;
-        
         me.pressure = stiffness * me.rho;
     }
 
@@ -75,16 +76,13 @@ public class ParticleManager : MonoBehaviour
             if (me == other)
                 continue;
             Vector2 distVec = other.transform.position - me.transform.position;
-            float lenght = distVec.magnitude;
 
-            if (lenght < kernelRadius && lenght > 0.02f)
+            if (distVec.magnitude < kernelRadius && distVec.magnitude > 0.02f)
             {
                 sigmaPress += distVec.normalized * ((me.pressure + other.pressure) / (2 * other.rho) * 
-                                                    spikyGradConst * MathF.Pow(kernelRadius - lenght, 2));
+                                                    spikyGradConst * MathF.Pow(kernelRadius - distVec.magnitude, 2));
 
-                // Debug.Log(sigmaPress);
-                
-                sigmaVisc +=  (other.velocity - me.velocity) / other.rho * (viscLaplacienConst * (kernelRadius - lenght));
+                sigmaVisc +=  (other.velocity - me.velocity) / other.rho * (viscLaplacienConst * (kernelRadius - distVec.magnitude));
             }
         }
 
@@ -100,9 +98,11 @@ public class ParticleManager : MonoBehaviour
             CalcDensityAndPressure(p);
 
         foreach (Particle p in particles)
-        {
             CalcForces(p);
-            p.UpdatePosition(deltaT);
+        
+        foreach (Particle p in particles)
+        {
+            p.UpdatePosition(Time.deltaTime);
             p.mass = MassSlider.value;
             p.rho = DensiterSlider.value;
             MassText.text = "Mass : " + p.mass;
