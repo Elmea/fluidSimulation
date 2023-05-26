@@ -8,6 +8,7 @@ public class InstantiatFluide : MonoBehaviour
     [SerializeField] private ParticleManager particleManager;
     public bool open = false;
     private int remains = 0;
+    private int tempo = 0;
     private bool shouldInstaciate;
     
     // Update is called once per frame
@@ -15,15 +16,21 @@ public class InstantiatFluide : MonoBehaviour
     {
         if(open)
         {
-            if (!shouldInstaciate)
+            if (particleManager.particles.Count > 260)
             {
-                shouldInstaciate = true;
+                open = false;
+                return;
+            }
+            
+            if (tempo == 0)
+            {
+                tempo = 3;
                 return;
             }
             
             GameObject instantiated = Instantiate(fluideParticle, transform.position, transform.rotation);
             particleManager.particles.Add(instantiated.GetComponent<Particle>());
-            shouldInstaciate = false;
+            tempo--;
         }
     }
 }

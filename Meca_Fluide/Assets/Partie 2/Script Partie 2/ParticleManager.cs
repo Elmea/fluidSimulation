@@ -17,8 +17,7 @@ public class ParticleManager : MonoBehaviour
 
     public List<Particle> particles;
 
-    public static float kernelRadius = 1.0f;
-    public static float deltaT = 1 / 60.0f;
+    public static float kernelRadius = 1.5f;
     
     private static float poly6;
     private static float spikyGradConst;
