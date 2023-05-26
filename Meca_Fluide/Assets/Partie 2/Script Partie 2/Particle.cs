@@ -9,12 +9,14 @@ public class Particle : MonoBehaviour
     public float mass = 0.02f;
     public float pressure;
 
-    private Vector2 lastVelocity = new Vector3( 0.0f, 0.0f);
-
     public Vector2 acceleration = new Vector3( 0.0f, 0.0f );
     public Vector2 force = new Vector3( 0.0f, 0.0f );
     public Vector2 velocity = new Vector3( 0.0f, 0.0f);
 
+    public float stiffness = 10000;
+    public float referenceDensity = 25.0f;
+    public float dynamicViscosity = 500.0f;
+    
     private void Awake()
     {
         velocity = new Vector3( 0.0f, 0.0f);
@@ -27,7 +29,7 @@ public class Particle : MonoBehaviour
 
         Vector2 externalForce = new Vector2();
         Vector2 normal = collision.GetContact(0).normal;
-        float mag = -(mass + 100.0f) * Vector2.Dot(this.lastVelocity, normal);
+        float mag = -(mass + 100.0f) * Vector2.Dot(this.velocity, normal);
         Debug.Log(mag);
 
         externalForce = mag * normal;
@@ -38,7 +40,6 @@ public class Particle : MonoBehaviour
     public void UpdatePosition(float deltaT)
     {
         acceleration = force * mass;
-        lastVelocity = velocity;  
         velocity += acceleration * deltaT;
         transform.position += deltaT * new Vector3(velocity.x, velocity.y, 0);
         force = new Vector2(0, 0);

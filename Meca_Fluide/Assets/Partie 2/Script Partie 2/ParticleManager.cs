@@ -7,10 +7,10 @@ using TMPro;
 
 public class ParticleManager : MonoBehaviour
 {
-    [SerializeField] Slider MassSlider;
-    [SerializeField] Slider DensiterSlider;
-    [SerializeField] Slider ViscositySlider;
-    [SerializeField] Slider RigiditySlider;
+    [SerializeField] public Slider MassSlider;
+    [SerializeField] public Slider DensiteSlider;
+    [SerializeField] public Slider ViscositySlider;
+    [SerializeField] public Slider RigiditySlider;
     [SerializeField] TextMeshProUGUI MassText;
     [SerializeField] TextMeshProUGUI DensiteText;
     [SerializeField] TextMeshProUGUI ViscosityText;
@@ -26,17 +26,14 @@ public class ParticleManager : MonoBehaviour
     private static float poly6;
     private static float spikyGradConst;
     private static float viscLaplacienConst;
-
-    public float stiffness = 10000;
-    public float referenceDensity = 25.0f;
-    public float dynamicViscosity = 500.0f;
+    
     private Vector2 g = new Vector2(0.0f, -9.81f); 
 
     private void Start()
     {
         MassSlider.value = 0.02f;
-        DensiterSlider.value = 1.0f;
-        ViscositySlider.value = dynamicViscosity;
+        DensiteSlider.value = 25.0f;
+        ViscositySlider.value = 500.0f;
         RecalcConstants();
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
@@ -68,8 +65,8 @@ public class ParticleManager : MonoBehaviour
             }
         }
 
-        me.rho = referenceDensity + sigmaW * me.mass;
-        me.pressure = stiffness * (me.rho - referenceDensity);
+        me.rho = me.referenceDensity + sigmaW * me.mass;
+        me.pressure = me.stiffness * (me.rho - me.referenceDensity);
     }
 
     private void CalcForces(Particle me)
@@ -94,7 +91,7 @@ public class ParticleManager : MonoBehaviour
         }
 
         me.force += me.mass * sigmaPress;
-        me.force += dynamicViscosity * me.mass * sigmaVisc;
+        me.force += me.dynamicViscosity * me.mass * sigmaVisc;
         me.force += me.rho * g;
     }
     
@@ -111,12 +108,16 @@ public class ParticleManager : MonoBehaviour
         {
             p.UpdatePosition(Time.deltaTime);
             p.mass = MassSlider.value;
-            p.rho = DensiterSlider.value;
-            dynamicViscosity = ViscositySlider.value;
-            MassText.text = "Mass : " + p.mass;
-            DensiteText.text = "Densit� : " + p.rho;
-            ViscosityText.text = "Viscosit� : " + dynamicViscosity;
-            NbParticles.text = "Nombre Particule : " + particles.Count;
+            p.rho = DensiteSlider.value;
+            p.dynamicViscosity = ViscositySlider.value;
+            p.stiffness = RigiditySlider.value;
         }
+
+        MassText.text = "Mass : " + MassSlider.value;
+        DensiteText.text = "Densite : " + DensiteSlider.value;
+        ViscosityText.text = "Viscosity : " + ViscositySlider.value;
+        RigidityText.text = "Rigidity : " + RigiditySlider.value;
+        NbParticles.text = "NbParticles : " + particles.Count;
+
     }
 }

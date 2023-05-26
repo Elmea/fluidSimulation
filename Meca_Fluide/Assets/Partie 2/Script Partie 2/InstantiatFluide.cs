@@ -8,8 +8,15 @@ public class InstantiatFluide : MonoBehaviour
     [SerializeField] private ParticleManager particleManager;
     [SerializeField] FlexibleColorPicker color;
     public bool open = false;
-    
+
     // Update is called once per frame
+    private void Start()
+    {
+        GameObject instantiated = Instantiate(fluideParticle, transform.position, transform.rotation);
+        color.color = instantiated.GetComponent<SpriteRenderer>().color;
+        particleManager.particles.Remove(instantiated.GetComponent<Particle>());
+        Destroy(instantiated);
+    }
     void Update()
     {
         if(open)
@@ -22,7 +29,12 @@ public class InstantiatFluide : MonoBehaviour
 
             GameObject instantiated = Instantiate(fluideParticle, transform.position, transform.rotation);
             instantiated.GetComponent<SpriteRenderer>().color = color.color;
-            particleManager.particles.Add(instantiated.GetComponent<Particle>());
+            Particle newOne = instantiated.GetComponent<Particle>();
+            newOne.mass = particleManager.MassSlider.value;
+            newOne.referenceDensity = particleManager.DensiteSlider.value;
+            newOne.dynamicViscosity = particleManager.ViscositySlider.value;
+            newOne.stiffness = particleManager.RigiditySlider.value;
+            particleManager.particles.Add(newOne);
         }
     }
 }
